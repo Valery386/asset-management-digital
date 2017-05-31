@@ -1,3 +1,4 @@
 .idea
 .gradle
 asset-management-digital.iml
+/target
