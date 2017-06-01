@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class Shop {
 
+    private Integer shopId;
     private String shopName;
     private Integer shopAddressNumber;
     private Integer shopAddressPostCode;
