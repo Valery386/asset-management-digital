@@ -8,4 +8,6 @@ import com.example.demo.entities.Shop;
 public interface ShopRepository {
 
     Number create(Shop shop);
+
+    Shop findOne(String shopName);
 }

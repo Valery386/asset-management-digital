@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entities.Shop;
+import com.example.demo.repository.mapping.extractor.ShopExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,6 +25,18 @@ public class JdbcShopRepository implements ShopRepository{
     @Autowired
     public JdbcShopRepository(NamedParameterJdbcOperations jdbcOperations) {
         this.jdbcOperations = jdbcOperations;
+    }
+
+    @Override
+    public Shop findOne(String shopName) {
+        final String SQL = "select * from "
+                + " where shop_name = :shopName ";
+
+        SqlParameterSource namedParameters = new MapSqlParameterSource("shopName", shopName);
+
+        Shop shop = jdbcOperations.query(SQL, namedParameters, new ShopExtractor());
+
+        return shop;
     }
 
     @Override
