@@ -12,4 +12,6 @@ public interface ShopService {
     Shop create(Shop shop);
 
     Shop update(Shop shop);
+
+    Shop save(Shop shop);
 }

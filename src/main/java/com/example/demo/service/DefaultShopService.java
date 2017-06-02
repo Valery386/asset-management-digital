@@ -5,6 +5,7 @@ import com.example.demo.entities.Shop;
 import com.example.demo.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 /**
  * Created by damz on 6/1/2017.
@@ -42,5 +43,17 @@ public class DefaultShopService implements ShopService {
         shopRepository.updateShop(shop);
 
         return shop;
+    }
+
+    @Override
+    public Shop save(Shop shop) {
+        Assert.notNull(shop, "No shop object found in the request body");
+        Shop shopFound = this.findOneByName(shop.getShopName());
+        if (shopFound == null) {
+            return this.create(shop);
+        } else {
+            shop.setShopId(shopFound.getShopId());
+            return this.update(shop);
+        }
     }
 }

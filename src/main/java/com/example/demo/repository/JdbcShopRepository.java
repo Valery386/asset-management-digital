@@ -44,9 +44,23 @@ public class JdbcShopRepository implements ShopRepository{
     public void updateShop(Shop shopFound) {
         String SQL = "update t_shop "
                 + "set "
-                + "   shop_address_number =:shopAddressNumber"
-                + "   shop_address_post_code =:shopAddressPostCode"
-                + "   information_about_version =:informationAboutVersion";
+                + "   shop_address_number =:shopAddressNumber, "
+                + "   shop_address_post_code =:shopAddressPostCode, "
+                + "   information_about_version =:informationAboutVersion, "
+                + " where "
+                + " shop_id =:shopId";
+
+        SqlParameterSource namedParameters = new MapSqlParameterSource()
+                .addValue("shopAddressNumber", shopFound.getShopAddressNumber())
+                .addValue("shopAddressPostCode", shopFound.getShopAddressPostCode())
+                .addValue("informationAboutVersion", shopFound.getInformationAboutVersion());
+
+        int rows_affected = jdbcOperations.update(SQL, namedParameters);
+
+        if (rows_affected != 1) {
+            throw new JdbcUpdateAffectedIncorrectNumberOfRowsException(String.format("Update of Shop %s affected %d rows: Should be 1. ", shopFound.getShopId(), rows_affected),
+                    1, rows_affected);
+        }
     }
 
     @Override
