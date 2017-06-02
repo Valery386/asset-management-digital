@@ -27,12 +27,19 @@ public class ShopController {
     @PostMapping("/api/v1/shop")
     public ResponseEntity<Shop> saveShop(@RequestBody Shop shop){
         Assert.notNull(shop, "No shop object found in the request body");
+        Shop shopReceive = null;
+        Shop shopFound = shopService.findOneByName(shop.getShopName());
 
-        Shop newShop = shopService.save(shop);
+        if (shopFound == null) {
+            shopReceive = shopService.create(shop);
+        } else {
+            shop.setShopId(shopFound.getShopId());
+            shopReceive = shopService.update(shop);
+        }
 
-        if(newShop == null)
+        if(shopReceive == null)
             return new ResponseEntity<Shop>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(newShop, HttpStatus.CREATED);
+        return new ResponseEntity<>(shopReceive, HttpStatus.CREATED);
     }
 }

@@ -6,8 +6,6 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by damz on 6/1/2017.
@@ -17,7 +15,15 @@ public class ShopExtractor implements ResultSetExtractor<Shop> {
     private Shop shop = null;
     private String shopName = null;
     private int shopId;
-    
+
+    public ShopExtractor(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public ShopExtractor(int shopId) {
+        this.shopId = shopId;
+    }
+
     @Override
     public Shop extractData(ResultSet rs) throws SQLException, DataAccessException {
        int rowNum = 0;
@@ -34,6 +40,7 @@ public class ShopExtractor implements ResultSetExtractor<Shop> {
            shop.setShopName(rs.getString("shop_name"));
            shop.setShopAddressNumber(rs.getInt("shop_address_number"));
            shop.setShopAddressPostCode(rs.getInt("shop_address_post_code"));
+           shop.setInformationAboutVersion(rs.getString("information_about_version"));
         } else {
             if (rs.getInt("shop_id") != shop.getShopId())
                 throw (this.shopName != null ? new IncorrectResultSizeDataAccessException("findOneByShopName " + shopName, 1, 2) : new IncorrectResultSizeDataAccessException("findById " + shopId, 1, 2));

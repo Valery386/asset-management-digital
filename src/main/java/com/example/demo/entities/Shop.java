@@ -12,5 +12,6 @@ public class Shop {
     private String shopName;
     private Integer shopAddressNumber;
     private Integer shopAddressPostCode;
+    private String informationAboutVersion;
 
 }

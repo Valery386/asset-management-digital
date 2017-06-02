@@ -28,33 +28,46 @@ public class JdbcShopRepository implements ShopRepository{
     }
 
     @Override
-    public Shop findOne(String shopName) {
+    public Shop findOneByShopName(String shopName) {
         final String SQL = "select * from "
+                + " t_shop "
                 + " where shop_name = :shopName ";
 
         SqlParameterSource namedParameters = new MapSqlParameterSource("shopName", shopName);
 
-        Shop shop = jdbcOperations.query(SQL, namedParameters, new ShopExtractor());
+        Shop shop = jdbcOperations.query(SQL, namedParameters, new ShopExtractor(shopName));
 
         return shop;
     }
 
     @Override
-    public Number create(Shop shop) {
+    public void updateShop(Shop shopFound) {
+        String SQL = "update t_shop "
+                + "set "
+                + "   shop_address_number =:shopAddressNumber"
+                + "   shop_address_post_code =:shopAddressPostCode"
+                + "   information_about_version =:informationAboutVersion";
+    }
+
+    @Override
+    public Number createShop(Shop shop) {
         final String SQL = "insert into t_shop ("
                 + " shop_name, "
                 + " shop_address_number, "
-                + " shop_address_post_code "
+                + " shop_address_post_code, "
+                + " information_about_version "
                 + " ) values ( "
                 + " :shopName, "
                 + " :shopAddressNumber, "
-                + " :shopAddressPostCode"
+                + " :shopAddressPostCode, "
+                + " :informationAboutVersion "
                 + " )";
 
         SqlParameterSource namedParameters = new MapSqlParameterSource()
                 .addValue("shopName", shop.getShopName())
                 .addValue("shopAddressNumber", shop.getShopAddressNumber())
-                .addValue("shopAddressPostCode", shop.getShopAddressPostCode());
+                .addValue("shopAddressPostCode", shop.getShopAddressPostCode())
+                .addValue("informationAboutVersion", shop.getInformationAboutVersion());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 

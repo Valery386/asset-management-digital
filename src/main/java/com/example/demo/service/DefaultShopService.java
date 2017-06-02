@@ -20,13 +20,26 @@ public class DefaultShopService implements ShopService {
     }
 
     @Override
-    public Shop save(Shop shop) {
+    public Shop findOneByName(String shopName) {
+        Shop shopFound = shopRepository.findOneByShopName(shopName);
 
-        Shop shopFound = shopRepository.findOne(shop.getShopName());
+        return shopFound;
+    }
 
-        Number shopId = shopRepository.create(shop);
-
+    @Override
+    public Shop create(Shop shop) {
+        Number shopId = null;
+        shop.setInformationAboutVersion("This shop is new, so it was created");
+        shopId = shopRepository.createShop(shop);
         shop.setShopId(shopId.intValue());
+
+        return shop;
+    }
+
+    @Override
+    public Shop update(Shop shop) {
+        shop.setInformationAboutVersion("This shop already exist, so it was updated");
+        shopRepository.updateShop(shop);
 
         return shop;
     }

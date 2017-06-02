@@ -7,7 +7,9 @@ import com.example.demo.entities.Shop;
  */
 public interface ShopRepository {
 
-    Number create(Shop shop);
+    Number createShop(Shop shop);
 
-    Shop findOne(String shopName);
+    Shop findOneByShopName(String shopName);
+
+    void updateShop(Shop shopFound);
 }
