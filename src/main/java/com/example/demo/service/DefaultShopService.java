@@ -29,7 +29,7 @@ public class DefaultShopService implements ShopService {
 
     @Override
     public Shop create(Shop shop) {
-        Number shopId = null;
+        Number shopId;
         shop.setInformationAboutVersion("This shop is new, so it was created");
         shopId = shopRepository.createShop(shop);
         shop.setShopId(shopId.intValue());
@@ -53,7 +53,9 @@ public class DefaultShopService implements ShopService {
             return this.create(shop);
         } else {
             shop.setShopId(shopFound.getShopId());
-            return this.update(shop);
+            shopFound.setInformationAboutVersion("This shop already exist, so it was updated. This information is from the replaced shop.");
+            this.update(shop);
+            return shopFound;
         }
     }
 }
