@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest( classes = DemoApplication.class,
         webEnvironment=SpringBootTest.WebEnvironment.DEFINED_PORT
         ,properties = "server.port:4000")
-@ActiveProfiles(["sandbox", "mysql"])
+@ActiveProfiles(["sandbox", "h2"])
 @DirtiesContext
 class ShopGenerationIntegration extends AbstractIntegrationSpecification {
 
@@ -26,6 +26,12 @@ class ShopGenerationIntegration extends AbstractIntegrationSpecification {
         when:
             def shopCreated = postForEntity("${BASE_URL}/shop", firstShop, Shop.class)
         then:
-            shopCreated != null
+            def response = shopCreated.body
+            response != null
+            response.shopId == 1
+            response.shopName == firstShop.shopName
+            response.shopAddressNumber == firstShop.shopAddressNumber
+            response.shopAddressPostCode == firstShop.shopAddressPostCode
+            response.informationAboutVersion == "This shop is new, so it was created"
     }
 }

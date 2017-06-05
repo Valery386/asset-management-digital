@@ -4,7 +4,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
-import org.springframework.web.client.RestTemplate
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -15,7 +14,7 @@ class AbstractIntegrationSpecification extends Specification {
 
     @Shared def BASE_URL = "http://localhost:4000/api/v1"
 
-    @Shared RestTemplate template = new TestRestTemplate()
+    @Shared TestRestTemplate template = new TestRestTemplate()
 
     def sessionHeader
 
