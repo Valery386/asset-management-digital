@@ -46,14 +46,15 @@ public class JdbcShopRepository implements ShopRepository{
                 + "set "
                 + "   shop_address_number =:shopAddressNumber, "
                 + "   shop_address_post_code =:shopAddressPostCode, "
-                + "   information_about_version =:informationAboutVersion, "
+                + "   information_about_version =:informationAboutVersion "
                 + " where "
                 + " shop_id =:shopId";
 
         SqlParameterSource namedParameters = new MapSqlParameterSource()
                 .addValue("shopAddressNumber", shopFound.getShopAddressNumber())
                 .addValue("shopAddressPostCode", shopFound.getShopAddressPostCode())
-                .addValue("informationAboutVersion", shopFound.getInformationAboutVersion());
+                .addValue("informationAboutVersion", shopFound.getInformationAboutVersion())
+                .addValue("shopId", shopFound.getShopId());
 
         int rows_affected = jdbcOperations.update(SQL, namedParameters);
 
