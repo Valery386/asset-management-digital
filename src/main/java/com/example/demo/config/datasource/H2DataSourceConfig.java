@@ -1,5 +1,6 @@
 package com.example.demo.config.datasource;
 
+import org.h2.tools.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
@@ -34,10 +35,10 @@ public class H2DataSourceConfig implements DataSourceConfig {
         return db;
     }
 
-    /**@Bean(destroyMethod = "stop")
+    @Bean(destroyMethod = "stop")
     public Server h2WebServer() throws SQLException {
         Server dbServer = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082");
         dbServer.start();
         return dbServer;
-    }**/
+    }
 }
