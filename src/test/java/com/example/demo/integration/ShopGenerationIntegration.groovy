@@ -37,6 +37,7 @@ class ShopGenerationIntegration extends AbstractIntegrationSpecification {
             response.shopAddressNumber == firstShop.shopAddressNumber
             response.shopAddressPostCode == firstShop.shopAddressPostCode
             response.informationAboutVersion == "This shop is new, so it was created"
+            response.address == "Google Bldg 41, 1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA"
     }
 
     def "Update and find an existing shop" () {

@@ -28,6 +28,7 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-jdbc")
 	compile("com.h2database:h2")
 	compile("org.flywaydb:flyway-core")
+	compile('com.google.maps:google-maps-services:0.1.20')
 
 	// mandatory dependencies for using Spock
 	compile "org.codehaus.groovy:groovy-all:2.4.10"
