@@ -50,6 +50,7 @@ class ShopGenerationIntegration extends AbstractIntegrationSpecification {
         when:
             def foundShop = defaultShopService.findOneByName(updateShop.getShopName())
             def shopUpdated = postForEntity("${BASE_URL}/shop", updateShop, Shop.class)
+            def newFoundShop = defaultShopService.findOneByName(updateShop.getShopName())
         then:
             def response = shopUpdated.body
             response != null
@@ -58,5 +59,9 @@ class ShopGenerationIntegration extends AbstractIntegrationSpecification {
             response.shopAddressNumber == foundShop.shopAddressNumber
             response.shopAddressPostCode == foundShop.shopAddressPostCode
             response.informationAboutVersion == "This shop already exist, so it was updated. This information is from the replaced shop."
+            newFoundShop.shopAddressNumber == updateShop.shopAddressNumber
+            newFoundShop.shopAddressPostCode == newFoundShop.shopAddressPostCode
     }
+
+
 }
